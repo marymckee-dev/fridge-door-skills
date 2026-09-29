@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- EDIT: title and link-preview text. Keep og:description under ~85 characters. -->
+<title>You're invited: Maya's 6th Birthday</title>
+<meta name="description" content="Saturday, October 17 · 3 PM · Our house">
+<meta property="og:title" content="You're invited: Party Name">
+<meta property="og:description" content="Saturday, October 17 · 3 PM · Our house">
+<meta property="og:type" content="website">
+<!-- Optional: a 1200x630 image in the same folder, e.g. preview.jpg -->
+<!-- <meta property="og:image" content="preview.jpg"> -->
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- EDIT: fonts. Pick one display font and one body font from Google Fonts. -->
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* EDIT: the whole look lives in these tokens. */
+  :root{
+    --backdrop:#efe9f7;      /* page behind the envelope */
+    --envelope:#c9b8ea;      /* envelope paper */
+    --envelope-dark:#b39fdf; /* flap and shading */
+    --liner:#ffd6e5;         /* inside of the flap */
+    --seal:#d4a23c;          /* wax seal */
+    --card:#fffaf3;          /* card paper */
+    --ink:#3b2a24;           /* main text */
+    --ink-soft:#6d5a52;      /* secondary text */
+    --accent:#8a5cc7;        /* buttons, highlights */
+    --accent-ink:#ffffff;    /* text on buttons */
+    --display:'Fraunces', Georgia, serif;
+    --body:'Nunito', system-ui, sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%}
+  body{background:var(--backdrop);color:var(--ink);font:400 17px/1.55 var(--body);
+       display:flex;justify-content:center;align-items:flex-start;padding:40px 16px 64px}
+  .stage{width:100%;max-width:560px}
+  .to{font:600 13px/1 var(--body);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);text-align:center;margin:0 0 18px}
+
+  /* Envelope */
+  .envelope{position:relative;width:100%;aspect-ratio:1.45/1;border:0;padding:0;background:none;cursor:pointer;
+            display:block;perspective:1400px;filter:drop-shadow(0 22px 40px rgba(60,30,20,.25))}
+  .envelope:focus-visible{outline:3px solid var(--accent);outline-offset:10px;border-radius:4px}
+  .env-back{position:absolute;inset:0;background:var(--envelope);border-radius:6px}
+  .env-front{position:absolute;inset:0;border-radius:6px;overflow:hidden;
+             background:
+               linear-gradient(to top right, transparent 49.6%, var(--envelope-dark) 50%, transparent 50.4%) left bottom/50% 100% no-repeat,
+               linear-gradient(to top left, transparent 49.6%, var(--envelope-dark) 50%, transparent 50.4%) right bottom/50% 100% no-repeat}
+  .name{position:absolute;left:0;right:0;bottom:16%;text-align:center;font:500 clamp(22px,5.4vw,32px)/1.2 var(--display);color:var(--ink);padding:0 12%}
+  .flap{position:absolute;left:0;right:0;top:0;height:58%;transform-origin:top center;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.6,.05,.3,1);z-index:3}
+  .flap::before,.flap::after{content:"";position:absolute;inset:0;clip-path:polygon(0 0,100% 0,50% 100%);border-radius:6px 6px 0 0}
+  .flap::before{background:var(--envelope-dark);backface-visibility:hidden}
+  .flap::after{background:var(--liner);transform:rotateX(180deg);backface-visibility:hidden}
+  .seal{position:absolute;left:50%;top:58%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;z-index:4;
+        background:radial-gradient(circle at 35% 30%, rgba(255,255,255,.35), transparent 45%), var(--seal);
+        box-shadow:0 3px 8px rgba(0,0,0,.25), inset 0 0 0 5px rgba(0,0,0,.08);
+        color:#fff;font:700 26px/64px var(--display);text-align:center;transition:opacity .3s}
+  .hint{text-align:center;color:var(--ink-soft);font-size:14px;margin-top:16px;animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{50%{opacity:.45}}
+  .envelope{transition:margin-top .9s cubic-bezier(.6,.05,.3,1)}
+  .envelope.opened{margin-top:40%} /* room for the open flap: flap is 58% of a 1.45:1 envelope */
+  .opened .flap{transform:rotateX(180deg);z-index:1}
+  .opened .seal{opacity:0}
+
+  /* Card */
+  .card{background:var(--card);border-radius:10px;box-shadow:0 20px 50px rgba(60,30,20,.18);
+        padding:clamp(24px,6vw,44px);margin-top:-8px;opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease}
+  .card.show{opacity:1;transform:none}
+  .card img.art{width:100%;border-radius:8px;display:block;margin:0 0 22px}
+  .eyebrow{font:700 12px/1 var(--body);letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin:0 0 10px}
+  h1{font:700 clamp(30px,8vw,44px)/1.08 var(--display);margin:0 0 14px}
+  .when{font:600 19px/1.4 var(--body);margin:0}
+  .where{margin:4px 0 0;color:var(--ink-soft)}
+  .where a{color:inherit}
+  .details{margin:22px 0 0;padding:0;list-style:none;border-top:1px solid rgba(0,0,0,.08)}
+  .details li{padding:10px 0;border-bottom:1px solid rgba(0,0,0,.08)}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 0}
+  .btn{appearance:none;border:0;border-radius:999px;padding:12px 20px;font:700 15px/1 var(--body);cursor:pointer;text-decoration:none;display:inline-block}
+  .btn-primary{background:var(--accent);color:var(--accent-ink)}
+  .btn-ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px currentColor}
+  .signoff{font:500 20px/1.3 var(--display);margin:26px 0 0}
+
+  /* RSVP */
+  .rsvp{margin:30px 0 0;padding:22px;border-radius:10px;background:rgba(0,0,0,.035)}
+  .rsvp h2{font:700 22px/1.2 var(--display);margin:0 0 4px}
+  .rsvp .by{margin:0 0 16px;color:var(--ink-soft);font-size:15px}
+  label{display:block;font-weight:600;font-size:15px;margin:12px 0 6px}
+  input[type=text],input[type=email],input[type=number],textarea{width:100%;padding:11px 12px;border:1.5px solid rgba(0,0,0,.18);border-radius:8px;font:inherit;background:#fff;color:var(--ink)}
+  textarea{min-height:70px;resize:vertical}
+  input:-webkit-autofill{-webkit-box-shadow:0 0 0 40px #fff inset;-webkit-text-fill-color:var(--ink)} /* autofill otherwise paints inputs pale blue */
+  .choice{display:flex;gap:10px}
+  .choice label{flex:1;margin:0;padding:12px;border:1.5px solid rgba(0,0,0,.18);border-radius:8px;text-align:center;cursor:pointer;background:#fff}
+  .choice input{position:absolute;opacity:0}
+  .choice input:checked + span{color:var(--accent)}
+  .choice label:has(input:checked){border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+  .rsvp .btn{margin-top:18px;width:100%}
+  .thanks{text-align:center;padding:10px 0}
+  .thanks h2{margin-bottom:6px}
+  .fallback{font-size:14px;color:var(--ink-soft);margin-top:12px}
+  .credit{text-align:center;font-size:12px;color:var(--ink-soft);opacity:.7;margin:28px 0 0}
+  .credit a{color:inherit}
+  [hidden]{display:none !important}
+  @media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
+</style>
+</head>
+<body>
+
+<!-- Netlify reads this hidden copy at deploy time to create the "rsvp" form. Keep the field names in sync with the visible form. -->
+<form name="rsvp" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input name="household"><input name="attending"><input name="count"><input name="email"><textarea name="note"></textarea><input name="bot-field">
+</form>
+
+<main class="stage">
+  <p class="to" id="toLine">An invitation for</p>
+
+  <button class="envelope" id="envelope" aria-label="Open your invitation">
+    <span class="env-back"></span>
+    <span class="flap"></span>
+    <span class="env-front"><span class="name" id="envName">Friends</span></span>
+    <span class="seal" id="seal">P</span>
+  </button>
+  <p class="hint" id="hint">Tap to open</p>
+
+  <article class="card" id="card" hidden>
+    <!-- Optional art: put an image file next to this page and uncomment. -->
+    <!-- <img class="art" src="art.jpg" alt=""> -->
+    <p class="eyebrow" id="eyebrow"></p>
+    <h1 id="title"></h1>
+    <p class="when" id="when"></p>
+    <p class="where" id="where"></p>
+    <ul class="details" id="details"></ul>
+    <div class="actions">
+      <a class="btn btn-ghost" id="gcal" target="_blank" rel="noopener">Add to Google Calendar</a>
+      <button class="btn btn-ghost" id="ics" type="button">Add to Apple / Outlook</button>
+    </div>
+
+    <section class="rsvp" id="rsvp">
+      <form id="rsvpForm">
+        <h2>Will you join us?</h2>
+        <p class="by" id="rsvpBy"></p>
+        <input type="hidden" name="form-name" value="rsvp">
+        <p hidden><label>Leave blank <input name="bot-field"></label></p>
+        <label for="household">Your name</label>
+        <input type="text" id="household" name="household" required>
+        <div class="choice" style="margin-top:14px">
+          <label><input type="radio" name="attending" value="yes" required><span>Can't wait</span></label>
+          <label><input type="radio" name="attending" value="no"><span>Sadly no</span></label>
+        </div>
+        <div id="countWrap">
+          <label for="count">How many of you?</label>
+          <input type="number" id="count" name="count" min="1" max="20" value="2">
+        </div>
+        <div id="emailWrap">
+          <label for="email">Email for a reminder (optional)</label>
+          <input type="email" id="email" name="email" autocomplete="email">
+        </div>
+        <label for="note">A note for the hosts (optional)</label>
+        <textarea id="note" name="note"></textarea>
+        <button class="btn btn-primary" type="submit" id="send">Send RSVP</button>
+        <p class="fallback" id="fallback" hidden></p>
+      </form>
+      <div class="thanks" id="thanks" hidden>
+        <h2 id="thanksTitle"></h2>
+        <p id="thanksBody"></p>
+        <button class="btn btn-ghost" type="button" id="change">Change my answer</button>
+      </div>
+    </section>
+
+    <p class="signoff" id="signoff"></p>
+  </article>
+  <!-- Small credit so others can find the free skill. Fine to remove if the host asks. -->
+  <p class="credit">Made with <a href="https://github.com/marymckee-dev/fridge-door-skills" target="_blank" rel="noopener">Fridge Door Skills</a></p>
+</main>
+
+<script>
+/* ===================== EDIT EVERYTHING IN THIS BLOCK ===================== */
+var PARTY = {
+  id: "maya-6-2026",                 // short, unique per party; keeps saved RSVPs separate
+  eyebrow: "You're invited",
+  title: "Maya's 6th Birthday",
+  sealLetter: "M",                  // one letter on the wax seal (often the guest of honor's initial)
+  whenLabel: "Saturday, November 7 · 2:00 to 4:00 PM",
+  venue: "Sunnyside Park Pavilion",
+  address: "400 Sunnyside Ave, Springfield",
+  // Calendar times, local to the party. 24-hour clock, "YYYY-MM-DDTHH:MM".
+  start: "2026-11-07T14:00",
+  end:   "2026-11-07T16:00",
+  timeZone: "America/New_York",
+  details: [
+    "Crowns and capes encouraged",
+    "Pizza, cupcakes and a unicorn piñata",
+    "Siblings welcome"
+  ],
+  rsvpBy: "Please RSVP by Saturday, October 31",
+  signoff: "Love, Maya's family",
+  hostPhone: "",                    // optional: shown as a text-us fallback if the RSVP form can't send
+  thanksYes: "Yay, you're on the list!",
+  thanksNo: "We'll miss you!",
+  askCount: true                    // false hides "How many of you?"
+};
+/* ========================================================================= */
+
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var params = new URLSearchParams(location.search);
+  var guest = (params.get("to") || "").trim();
+  // Personal links from make_links.py carry the guest's email as "e" (base64url), so they never have to type it.
+  var guestEmail = "";
+  try { var e64 = params.get("e"); if (e64) guestEmail = atob(e64.replace(/-/g,"+").replace(/_/g,"/")); } catch(err){}
+  var KEY = "rsvp:" + PARTY.id;
+
+  // Envelope
+  $("envName").textContent = guest || "Friends";
+  $("toLine").textContent = guest ? "An invitation for" : "You're invited";
+  $("seal").textContent = PARTY.sealLetter;
+
+  // Card
+  $("eyebrow").textContent = PARTY.eyebrow;
+  $("title").textContent = PARTY.title;
+  $("when").textContent = PARTY.whenLabel;
+  var map = "https://maps.google.com/?q=" + encodeURIComponent(PARTY.address);
+  $("where").innerHTML = "";
+  var v = document.createElement("span"); v.textContent = PARTY.venue + " · ";
+  var a = document.createElement("a"); a.href = map; a.target = "_blank"; a.rel = "noopener"; a.textContent = PARTY.address;
+  $("where").append(v, a);
+  PARTY.details.forEach(function(d){ var li = document.createElement("li"); li.textContent = d; $("details").appendChild(li); });
+  $("rsvpBy").textContent = PARTY.rsvpBy;
+  $("signoff").textContent = PARTY.signoff;
+  if (!PARTY.askCount) $("countWrap").hidden = true;
+  if (guest) $("household").value = guest;
+  if (guestEmail) { $("email").value = guestEmail; $("emailWrap").hidden = true; }
+
+  // Calendar links
+  function stamp(s){ return s.replace(/[-:]/g, "") + "00"; }
+  var desc = PARTY.details.join("\n") + "\n\n" + location.href.split("?")[0];
+  $("gcal").href = "https://calendar.google.com/calendar/render?action=TEMPLATE" +
+    "&text=" + encodeURIComponent(PARTY.title) +
+    "&dates=" + stamp(PARTY.start) + "/" + stamp(PARTY.end) +
+    "&ctz=" + encodeURIComponent(PARTY.timeZone) +
+    "&location=" + encodeURIComponent(PARTY.venue + ", " + PARTY.address) +
+    "&details=" + encodeURIComponent(desc);
+  $("ics").addEventListener("click", function(){
+    var esc = function(t){ return t.replace(/([,;\\])/g, "\\$1").replace(/\n/g, "\\n"); };
+    var ics = ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//party-invite//EN","BEGIN:VEVENT",
+      "UID:" + PARTY.id + "@party-invite",
+      "DTSTAMP:" + new Date().toISOString().replace(/[-:]/g,"").split(".")[0] + "Z",
+      "DTSTART;TZID=" + PARTY.timeZone + ":" + stamp(PARTY.start),
+      "DTEND;TZID=" + PARTY.timeZone + ":" + stamp(PARTY.end),
+      "SUMMARY:" + esc(PARTY.title),
+      "LOCATION:" + esc(PARTY.venue + ", " + PARTY.address),
+      "DESCRIPTION:" + esc(desc),
+      "BEGIN:VALARM","TRIGGER:-P1D","ACTION:DISPLAY","DESCRIPTION:" + esc(PARTY.title) + " tomorrow","END:VALARM",
+      "END:VEVENT","END:VCALENDAR"].join("\r\n");
+    var url = URL.createObjectURL(new Blob([ics], {type:"text/calendar"}));
+    var link = document.createElement("a"); link.href = url; link.download = PARTY.id + ".ics";
+    document.body.appendChild(link); link.click(); link.remove();
+  });
+
+  // Open the envelope
+  var opened = false;
+  function open(instant){
+    if (opened) return; opened = true;
+    $("envelope").classList.add("opened"); $("hint").hidden = true;
+    $("card").hidden = false;
+    setTimeout(function(){ $("card").classList.add("show"); if (!instant) $("card").scrollIntoView({behavior:"smooth", block:"start"}); }, instant ? 0 : 650);
+  }
+  $("envelope").addEventListener("click", function(){ open(false); });
+  if (location.hash === "#open") open(true); // handy for previews and screenshots
+
+  // RSVP
+  function showThanks(r){
+    $("rsvpForm").hidden = true; $("thanks").hidden = false;
+    $("thanksTitle").textContent = r.attending === "yes" ? PARTY.thanksYes : PARTY.thanksNo;
+    $("thanksBody").textContent = r.attending === "yes" && PARTY.askCount ? "We have you down for " + r.count + "." : "";
+  }
+  try { var saved = JSON.parse(localStorage.getItem(KEY) || "null"); if (saved) { showThanks(saved); } } catch(e){}
+  $("change").addEventListener("click", function(){ $("thanks").hidden = true; $("rsvpForm").hidden = false; });
+  document.querySelectorAll("input[name=attending]").forEach(function(r){
+    r.addEventListener("change", function(){ if (PARTY.askCount) $("countWrap").hidden = this.value === "no"; });
+  });
+  $("rsvpForm").addEventListener("submit", function(e){
+    e.preventDefault();
+    var data = new FormData(this);
+    var reply = { attending: data.get("attending"), count: data.get("count") || "1" };
+    $("send").disabled = true; $("send").textContent = "Sending...";
+    fetch("/", { method:"POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body:new URLSearchParams(data).toString() })
+      .then(function(res){ if (!res.ok) throw new Error(res.status); })
+      .then(function(){ try{ localStorage.setItem(KEY, JSON.stringify(reply)); }catch(e){} showThanks(reply); })
+      .catch(function(){
+        var f = $("fallback"); f.hidden = false;
+        f.textContent = "Hmm, that didn't go through." + (PARTY.hostPhone ? " Text us at " + PARTY.hostPhone + " instead!" : " Please try again in a minute.");
+      })
+      .finally(function(){ $("send").disabled = false; $("send").textContent = "Send RSVP"; });
+  });
+})();
+</script>
+</body>
+</html>

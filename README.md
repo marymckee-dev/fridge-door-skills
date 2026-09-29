@@ -13,6 +13,20 @@ Tell Claude about the party and it makes a custom digital invitation: a sealed e
 
 It feels like Paperless Post, but the design is whatever you want and the RSVPs are yours.
 
+**[See a live example](https://fridge-door-party-demo.netlify.app/?to=The+Rivera+Family)** (tap the envelope).
+
+<p align="center">
+  <img src="docs/envelope.png" alt="A lavender envelope addressed to The Rivera Family with a gold wax seal" width="300">
+  &nbsp;
+  <img src="docs/card.png" alt="The opened invitation card for Maya's 6th Birthday with details, calendar buttons and an RSVP form" width="300">
+</p>
+
+When your guest list is ready, the skill makes a sending page: every family gets a personal link, and one tap opens a text or email with it already written.
+
+<p align="center">
+  <img src="docs/send-invites.png" alt="A list of guest families, each with Copy link, Text and Email buttons" width="620">
+</p>
+
 ## How to use a skill
 
 **In the Claude app (desktop or web):**
