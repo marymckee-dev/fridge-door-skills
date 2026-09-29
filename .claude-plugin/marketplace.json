@@ -1,0 +1,11 @@
+{
+  "name": "fridge-door-skills",
+  "owner": { "name": "Mary McKee" },
+  "plugins": [
+    {
+      "name": "fridge-door-skills",
+      "source": "./",
+      "description": "Claude skills for the real-life stuff that ends up on the fridge. Starting with party invitations."
+    }
+  ]
+}

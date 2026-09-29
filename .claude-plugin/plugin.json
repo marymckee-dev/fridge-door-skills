@@ -1,0 +1,8 @@
+{
+  "name": "fridge-door-skills",
+  "description": "Claude skills for the real-life stuff that ends up on the fridge. Starting with party invitations.",
+  "version": "0.1.0",
+  "author": { "name": "Mary McKee" },
+  "homepage": "https://github.com/marymckee-dev/fridge-door-skills",
+  "license": "CC-BY-NC-4.0"
+}
